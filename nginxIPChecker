@@ -1,1 +1,14 @@
+# Returns a unique list of IP addresses and the HTTP response code from an nginx log
+# In an nginx docker container, this is found at /config/log/nginx
 
+#!/bin/bash
+
+read -p "Type 1 for all HTTP codes or type 2 for HTTP error codes: " response;
+
+echo $response
+
+if [ $response==1 ]; the
+cat "./access.log" | sed 's/\[.*\]//' | awk '{print "IP: ", $1, " | Error: ", $7}' | sort |  uniq -c
+else
+cat "./access.log" | sed 's/\[.*\]//' | awk '{ if ($7>290) { print "IP: ", $1, " | Error: ", $7} } ' | sort |  uniq -c
+fi
